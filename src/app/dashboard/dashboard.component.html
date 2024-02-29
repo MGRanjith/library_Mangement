@@ -1,0 +1,47 @@
+<app-books  [all]="totalproductcount" 
+           [instock]="totalproductInstock"
+           [outofstock]=" totalproductoutofstock"
+           (selectedfilterRadiobuttonchanged)="onFilterChanged($event)"></app-books>
+              
+<div class="row m-5 p-3">
+    <div class="col-12">
+        <h1 class="text-center bg-success text-white rounded-pill mb-1">Available Books</h1>
+        <div class="container" *ngIf="roles==='admin'">
+            <p class="navbar-text navbar-right"><button routerLink="/form" class="btn btn-primary">Add Books</button>  <button routerLink="/details" class="btn btn-primary"> userdetails</button></p>
+          
+        </div>
+        <ng-container *ngFor="let course of courses">
+            <div class="course-container">
+                <div *ngIf="selectedFilterRadioButton === 'all' || course.inventory.toString()===selectedFilterRadioButton">
+                <div class="course-card shadow bg-body-tertiary rounded">
+                    <div>
+                        <img [src]="course.image" style="width:220px; height:140px;">
+                    </div>
+                    <div class="course-name">
+                        <h4>{{ course.name}}</h4>
+                    </div>
+                    <div class="course-description">
+                        <p>{{course.description.slice(0, 80)}}...</p>
+                    </div>
+                    <div class="details ms-3">
+                        <div class="course-type" [ngStyle]="{color: course.type === 'Free' ? 'Green' : 'Red'}">
+                            {{course.type}}</div>
+
+                    </div>
+                    <div class="ekart--product--in--stock" [ngStyle]="{color:course.inventory?'green':'red'}">
+                        {{course.inventory?'Available in stock':'Not Available in stock'}}
+                       </div>
+                    <div class="course-buttons mb-3">
+                        <button class="btn btn-success ms-3" (click)="addtocart(course)"  *ngIf="roles==='user'">Borrow</button>
+                        <button class="btn btn-show" *ngIf="roles==='admin'"
+                            routerLink="/edit/{{course.id}}">Edit</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </ng-container>
+    </div>
+     
+    
+
+</div>

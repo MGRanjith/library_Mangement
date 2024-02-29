@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <h1 class="text-center fw-bold ">Welcome to Library</h1>
+  <div class="row mt-5">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="alert alert-danger" *ngIf="error">
+        <p>{{ error }}</p>
+      </div>
+      <div *ngIf="isLoading" style="text-align: center;">
+        <!-- <app-loading-spinner></app-loading-spinner> -->
+      </div>
+      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+        <div *ngIf="!isLoginMode" class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="form-control" ngModel name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" class="form-control" ngModel name="email" required email />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6" />
+        </div>
+        <div class="form-group">
+            <label for="userRole">Select Role:</label>
+           <select id="userRole" ngModel name="selectedRole"   class="form-control" required>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select> 
+    
+            
+          </div>
+        <div class="form-group">
+          <!-- <label>
+            <input type="radio" ngModel name="selectedRole" value="user"> User
+          </label>
+          <label>
+            <input type="radio" ngModel name="selectedRole" value="admin"> Admin
+          </label> -->
+  
+          <!-- <button (click)="onRoleSelectionChange()">Log Selected Role</button> -->
+        </div>
+  
+  
+        <div>
+          <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
+            {{ isLoginMode ? 'Login' : 'Sign Up' }}
+          </button>
+          |
+          <button class="btn btn-primary" (click)="onSwitchMode()" type="button">
+            Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
